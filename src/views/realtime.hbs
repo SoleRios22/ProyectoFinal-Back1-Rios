@@ -1,0 +1,25 @@
+<h1>Productos en tiempo real</h1>
+
+<ul id="productsList"></ul>
+
+<h2>Agregar producto (via socket)</h2>
+<form id="formAdd">
+  <input name="title" placeholder="title" required />
+  <input name="description" placeholder="desc" />
+  <input name="price" type="number" placeholder="price" required />
+  <input name="code" placeholder="code" required />
+  <input name="stock" type="number" placeholder="stock" />
+  <input name="category" placeholder="category" />
+  <input name="thumbnail" placeholder="thumbnail url" />
+  <button>Agregar</button>
+</form>
+
+<h2>Eliminar (id)</h2>
+<form id="formDel">
+  <input name="id" placeholder="product id" required />
+  <button>Eliminar</button>
+</form>
+
+<script src="/js/realtime.js"></script>
+
+
