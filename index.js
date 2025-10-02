@@ -1,12 +1,13 @@
+
 import http from "http";
 import { Server } from "socket.io";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
-import app from "./src/app.js";
-import { setSocketServer } from "./src/routes/product.router.js";
+dotenv.config();
+
+import app, { setSocketServer } from "./src/app.js";  // 👈 Importá de app.js
 import ProductManager from "./src/dao/ProductManager.js";
 
-dotenv.config();
 const PORT = process.env.PORT || 8080;
 const MONGO_URI = process.env.MONGO_URI;
 
@@ -48,7 +49,7 @@ io.on("connection", async (socket) => {
 
 async function start() {
   try {
-    await mongoose.connect(MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true });
+    await mongoose.connect(MONGO_URI);
     console.log("Mongo connected");
     server.listen(PORT, () => console.log(`Server listening on http://localhost:${PORT}`));
   } catch (err) {

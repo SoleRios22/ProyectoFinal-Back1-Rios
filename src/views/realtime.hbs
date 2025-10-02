@@ -1,25 +1,94 @@
-<h1>Productos en tiempo real</h1>
 
-<ul id="productsList"></ul>
 
-<h2>Agregar producto (via socket)</h2>
-<form id="formAdd">
-  <input name="title" placeholder="title" required />
-  <input name="description" placeholder="desc" />
-  <input name="price" type="number" placeholder="price" required />
-  <input name="code" placeholder="code" required />
-  <input name="stock" type="number" placeholder="stock" />
-  <input name="category" placeholder="category" />
-  <input name="thumbnail" placeholder="thumbnail url" />
-  <button>Agregar</button>
-</form>
+<div class="container">
+  <h1 class="mb-4 text-center">Productos en Tiempo Real</h1>
 
-<h2>Eliminar (id)</h2>
-<form id="formDel">
-  <input name="id" placeholder="product id" required />
-  <button>Eliminar</button>
-</form>
+  <!-- Formulario para agregar producto -->
+  <div class="card mb-4">
+    <div class="card-body">
+      <h5 class="card-title">Agregar Producto</h5>
+      <form id="productForm">
+        <div class="row g-3">
+          <div class="col-md-6">
+            <input type="text" class="form-control" id="title" placeholder="Título" required>
+          </div>
+          <div class="col-md-6">
+            <input type="text" class="form-control" id="description" placeholder="Descripción">
+          </div>
+          <div class="col-md-4">
+            <input type="number" class="form-control" id="price" placeholder="Precio" required>
+          </div>
+          <div class="col-md-4">
+            <input type="text" class="form-control" id="code" placeholder="Código" required>
+          </div>
+          <div class="col-md-4">
+            <input type="number" class="form-control" id="stock" placeholder="Stock">
+          </div>
+          <div class="col-md-6">
+            <input type="text" class="form-control" id="category" placeholder="Categoría">
+          </div>
+          <div class="col-md-6">
+            <input type="text" class="form-control" id="thumbnails" placeholder="URL imagen (separadas por coma)">
+          </div>
+        </div>
+        <button type="submit" class="btn btn-primary mt-3">Agregar</button>
+      </form>
+    </div>
+  </div>
 
-<script src="/js/realtime.js"></script>
+  <!-- Lista de productos -->
+  <div class="row" id="productList"></div>
+</div>
+
+<script src="/socket.io/socket.io.js"></script>
+<script>
+  const socket = io();
+
+  const productList = document.getElementById("productList");
+  const productForm = document.getElementById("productForm");
+
+  socket.on("updateProducts", (products) => {
+    productList.innerHTML = "";
+    products.forEach(product => {
+      const card = document.createElement("div");
+      card.className = "col-md-4 mb-4";
+      card.innerHTML = `
+        <div class="card h-100 product-card">
+          <img src="${product.thumbnails?.[0] || 'https://via.placeholder.com/300'}" class="card-img-top" alt="${product.title}">
+          <div class="card-body">
+            <h5 class="card-title">${product.title}</h5>
+            <p class="card-text">${product.description || ""}</p>
+            <p class="card-text"><strong>Precio:</strong> $${product.price}</p>
+            <p class="card-text"><strong>Stock:</strong> ${product.stock}</p>
+            <p class="card-text"><strong>Categoría:</strong> ${product.category}</p>
+          </div>
+          <div class="card-footer">
+            <button class="btn btn-danger btn-sm" onclick="deleteProduct('${product._id}')">Eliminar</button>
+          </div>
+        </div>
+      `;
+      productList.appendChild(card);
+    });
+  });
+
+  productForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const productData = {
+      title: document.getElementById("title").value,
+      description: document.getElementById("description").value,
+      price: parseFloat(document.getElementById("price").value),
+      code: document.getElementById("code").value,
+      stock: parseInt(document.getElementById("stock").value),
+      category: document.getElementById("category").value,
+      thumbnails: document.getElementById("thumbnails").value.split(",").map(t => t.trim())
+    };
+    socket.emit("addProduct", productData);
+    productForm.reset();
+  });
+
+  function deleteProduct(id) {
+    socket.emit("deleteProduct", id);
+  }
+</script>
 
 

@@ -1,0 +1,103 @@
+/* ====== Estilos Globales ====== */
+body {
+  font-family: 'Segoe UI', Tahoma, sans-serif;
+  background-color: #f8f9fa;
+  
+}
+
+a {
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* ====== Navbar ====== */
+.navbar-brand {
+  font-weight: bold;
+  font-size: 1.4rem;
+}
+
+.navbar-nav .nav-link {
+  font-size: 1.1rem;
+}
+
+/* ====== Contenido Principal ====== */
+.container {
+  margin-top: 20px;
+}
+
+/* ====== Tarjetas de Productos ====== */
+.card {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  border-radius: 10px;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.card-title {
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.card-text {
+  font-size: 0.95rem;
+}
+
+/* ====== Botones ====== */
+.btn {
+  border-radius: 5px;
+  font-weight: bold;
+  transition: all 0.2s ease;
+}
+
+.btn:hover {
+  transform: scale(1.05);
+}
+
+/* ====== Footer ====== */
+footer {
+  background-color: #343a40;
+  color: #fff;
+}
+
+/* ====== Paginación ====== */
+.pagination {
+  justify-content: center;
+}
+
+.page-link {
+  color: #343a40;
+}
+
+.page-link:hover {
+  background-color: #343a40;
+  color: white;
+}
+
+/* ====== Realtime Products ====== */
+#realtime-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.product-card {
+  flex: 1 1 calc(25% - 20px);
+}
+
+@media (max-width: 768px) {
+  .product-card {
+    flex: 1 1 calc(50% - 20px);
+  }
+}
+
+@media (max-width: 480px) {
+  .product-card {
+    flex: 1 1 100%;
+  }
+}
