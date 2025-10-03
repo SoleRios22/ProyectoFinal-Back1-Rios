@@ -18,12 +18,7 @@ cd tu-repo
 npm install
 ```
 
-3. **Crear archivo `.env` en la raíz con:**
-```
-MONGO_URI=mongodb+srv://soledadrios38_db_user:504D2oImIGnlN8ep@cluster01.bokkn4b.mongodb.net/?retryWrites=true&w=majority&appName=Cluster01
 
-PORT=8080
-```
 
 4. **Levantar servidor:**
 ```bash
